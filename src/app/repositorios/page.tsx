@@ -28,7 +28,8 @@ export default function Repositorios() {
     }
 
     getData()
-  })
+  }, []);
+
   return (
     <div>
       <h1>Página Repositórios</h1>
