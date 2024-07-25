@@ -1,4 +1,24 @@
-export default function Home() {
+interface DataProps {
+  id: number;
+  name: string;
+  full_name: string;
+  owner: {
+    login: string;
+    id: number;
+    avatar_url: string;
+    url: string;
+  }
+}
+
+async function getData() {
+  const response = await fetch("https://api.github.com/users/alexdev613/repos")
+
+  return response.json();
+}
+
+export default async function Home() {
+  const data: DataProps[] = await getData();
+
   return (
     <main>
       <h1>Página Home</h1>
@@ -6,8 +26,16 @@ export default function Home() {
       <p>
         Por padrão nossos componentes com App Router são Server Side (que é renderizado do lado do servidor), e se quisermos
         usar um useState por exemplo, temos que modificar o componente para Client Side, passando "use client" na primeira
-        linha do código do componente.
+        linha do código fora do componente.
       </p>
+      <br />
+      <h3>Meus repositórios</h3>
+      {data.map( (item) => (
+        <div key={item.id}>
+          <strong>Repositório: </strong> <a>{item.name}</a>
+          <br /><br />
+        </div>
+      ))}
     </main>
   )
 }
