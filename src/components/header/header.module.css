@@ -1,0 +1,12 @@
+.header {
+  color: #FFF;
+}
+
+.header a {
+  text-decoration: none;
+  color: #FFF;
+}
+
+.header a:hover {
+  color: #1bddcc;
+}
