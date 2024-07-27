@@ -13,12 +13,11 @@ interface DataProps {
 
 async function delayFetch(url: string, delay: number) {
   await new Promise(resolve => setTimeout(resolve, delay));
-  const response = await fetch(url,
+  const response = await fetch(url, { next: {revalidate: 60 } } // com esta configuração, a página será revalidada
+    // a cada 60 segundos após o primeiro usuário entrar na aplicação independente da quantidade de usuário que
+    // entrarão neste período! A nova requisição só será feita após 60 segundos...
     // { cache: 'force-cache' }, // este é o padrão, e ele mantém cache, a página será sempre estática (é o mais rápido)
     // { cache: 'no-store' } // todo usuário que entrar na aplicação faz uma nova requisição (busca os dados dinamicamente)
-    { next: {revalidate: 60 } } // com esta configuração, a página será revalidada a cada 60 segundos após
-    // o primeiro usuário entrar na aplicação independente da quantidade de usuário que entrarão neste período!
-    // A nova requisição só será feita após 60 segundos...
   );
   return response.json();
 }
